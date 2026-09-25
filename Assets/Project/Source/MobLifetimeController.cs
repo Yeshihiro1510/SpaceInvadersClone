@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Pool;
@@ -8,21 +7,22 @@ namespace Project.Source
 {
     public class MobLifetimeController : MonoBehaviour
     {
-        [field: SerializeField] public float SpawnRate { get; private set; }
-        [field: SerializeField] public float YSpawnOffset { get; private set; }
-        [field: SerializeField] public float YDespawnOffset { get; private set; }
+        [field: SerializeField] public float YTopOffset { get; private set; }
+        [field: SerializeField] public float YBottomOffset { get; private set; }
 
         [SerializeField] private MobController _prefab;
 
         private ObjectPool<MobController> _pool;
         private readonly List<MobController> _activeMobs = new();
-        private float _lifetimeWayDistance;
-
-        private float _spawnTimer;
-
+        
         private void Awake()
         {
-            _pool = new ObjectPool<MobController>(() => Instantiate(_prefab),
+            _pool = new ObjectPool<MobController>(() =>
+                {
+                    var mob = Instantiate(_prefab);
+                    mob.onDespawn += OnMobDespawn;
+                    return mob;
+                },
                 o =>
                 {
                     o.gameObject.SetActive(true);
@@ -35,28 +35,15 @@ namespace Project.Source
                 });
         }
 
-        private void Start()
-        {
-            _lifetimeWayDistance = GameFieldInfo.TopBound - (GameFieldInfo.BottomBound + YDespawnOffset);
-        }
+        private void OnMobDespawn(MobController mob) => _pool.Release(mob);
 
-        private void Update()
+        public MobController Spawn()
         {
-            _spawnTimer += Time.deltaTime;
-            
-            if (_spawnTimer >= SpawnRate)
-            {
-                var mob = _pool.Get();
-                mob.transform.position = new Vector3(Random.Range(GameFieldInfo.LeftBound, GameFieldInfo.RightBound), GameFieldInfo.TopBound, 0);
-                StartCoroutine(MobRoutine(mob));
-                _spawnTimer = 0;
-            }
-        }
-
-        private IEnumerator MobRoutine(MobController target)
-        {
-            yield return new WaitForSeconds(_lifetimeWayDistance / target.FallSpeed);
-            _pool.Release(target);
+            var mob = _pool.Get();
+            mob.LifetimeTimer = (GameFieldInfo.Top2BottomDistance + YTopOffset - YBottomOffset) / mob.FallSpeed;
+            mob.Health = mob.StartHealth;
+            mob.transform.position = new Vector3(Random.Range(GameFieldInfo.LeftBound, GameFieldInfo.RightBound), GameFieldInfo.TopBound + YTopOffset, 0);
+            return mob;
         }
     }
 }

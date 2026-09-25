@@ -8,6 +8,7 @@ namespace Project.Source
         public static float RightBound { get; private set; }
         public static float TopBound { get; private set; }
         public static float BottomBound { get; private set; }
+        public static float Top2BottomDistance { get; private set; }
 
         private void OnValidate()
         {
@@ -18,6 +19,7 @@ namespace Project.Source
             LeftBound = transform.position.x - xHalfSize;
             TopBound = transform.position.y + yHalfSize;
             BottomBound = transform.position.y - yHalfSize;
+            Top2BottomDistance = TopBound - BottomBound;
         }
     }
 }

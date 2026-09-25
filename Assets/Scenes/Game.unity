@@ -500,8 +500,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4e3ea06560d4e428cde7885905666e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Source.MobSpawner
-  <SpawnRate>k__BackingField: 1
-  <YDespawnOffset>k__BackingField: -2
+  <YTopOffset>k__BackingField: 2
+  <YBottomOffset>k__BackingField: -2
   _prefab: {fileID: 2809501790749896406, guid: 35925f851ff77b64799d7f5be5ae545c, type: 3}
 --- !u!4 &600411963
 Transform:
@@ -803,7 +803,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa153922a366494eb97cb999a2e383c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Project.Source.Game
+  <MobsSpawnRate>k__BackingField: 1
   _playerPrefab: {fileID: 5392103095916396024, guid: 8b61a2f5d21f54f43b2d9c1b815406e2, type: 3}
+  _mobLifetime: {fileID: 600411962}
+  _points: {fileID: 1695868954}
 --- !u!1 &1695868953
 GameObject:
   m_ObjectHideFlags: 0
@@ -894,6 +897,51 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1896264544
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1896264545}
+  - component: {fileID: 1896264546}
+  m_Layer: 0
+  m_Name: BulletLifetimeController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1896264545
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1896264544}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1896264546
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1896264544}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1548e23bc4e41f78c540bb917fc2711, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Project.Source.BulletLifetimeController
+  _prefab: {fileID: 4792311143860349722, guid: 344e391db655c5e4d9a2413eb376a532, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -901,6 +949,7 @@ SceneRoots:
   - {fileID: 1401148873}
   - {fileID: 1695868955}
   - {fileID: 600411963}
+  - {fileID: 1896264545}
   - {fileID: 1014273816}
   - {fileID: 519420032}
   - {fileID: 1733163889}

@@ -5,7 +5,7 @@ namespace Project.Source
 {
     public class PointsController : MonoBehaviour
     {
-        [field: SerializeField] public int RewardPerEnemy { get; private set; }
+        [field: SerializeField, Min(0)] public int RewardPerEnemy { get; private set; }
             
         [SerializeField] private TMP_Text _text;
         

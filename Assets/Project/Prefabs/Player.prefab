@@ -105,4 +105,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 606826c48c4f25846afe7bca64b8723c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Source.PlayerMovement
-  <Speed>k__BackingField: 14
+  <Speed>k__BackingField: 20
+  <AttackRate>k__BackingField: 0.05
