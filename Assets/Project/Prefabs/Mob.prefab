@@ -83,7 +83,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: -2413806693520163455, guid: ebe73ca9363db456bacf42c025bb4847, type: 3}
+  m_Sprite: {fileID: 6373586117842269173, guid: 3fac3621e7ef7d84e91e0f16f73e1dbf, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -106,7 +106,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 116fe7d16918436eb30daa6308223719, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Project.Source.MobController
-  <StartHealth>k__BackingField: 3
+  <StartHealth>k__BackingField: 5
   <FallSpeed>k__BackingField: 4
 --- !u!58 &5296655394782481192
 CircleCollider2D:
@@ -143,4 +143,4 @@ CircleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Radius: 0.5
+  m_Radius: 0.75

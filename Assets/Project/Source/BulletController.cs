@@ -5,26 +5,36 @@ namespace Project.Source
 {
     public class BulletController : MonoBehaviour
     {
-        [field: SerializeField] public float UpperSpeed { get; private set; }
-        
-        public float LifetimeTimer { get; set; }
-        
+        [field: SerializeField] public float Damage { get; private set; }
+        [field: SerializeField] public float Speed { get; private set; }
+
+        private float _timer;
+        private Vector2 _velocity;
+
+        public event Action<BulletController> onDespawn;
         public event Action<BulletController> onDeath;
-        
+
+        public void Launch(float lifetime, Vector2 direction)
+        {
+            _timer = lifetime;
+            _velocity = direction * Speed;
+        }
+
         private void Update()
         {
-            var delta = UpperSpeed * Time.deltaTime;
-            transform.Translate(0, delta, 0);
-            
-            if (LifetimeTimer <= 0) Death();
-            else LifetimeTimer -= Time.deltaTime;
+            transform.Translate(_velocity * Time.deltaTime);
+
+            if (_timer <= 0) onDespawn?.Invoke(this);
+            else _timer -= Time.deltaTime;
         }
 
         private void OnTriggerEnter2D(Collider2D other)
         {
-            Death();
+            if (other.TryGetComponent(out IDamageable damageable))
+            {
+                damageable.TakeDamage(Damage);
+                onDeath?.Invoke(this);
+            }
         }
-        
-        private void Death() => onDeath?.Invoke(this);
     }
 }

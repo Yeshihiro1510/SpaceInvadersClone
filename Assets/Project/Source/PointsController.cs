@@ -10,6 +10,8 @@ namespace Project.Source
         [SerializeField] private TMP_Text _text;
         
         private Points _points;
+        
+        public int Value => _points.Value;
 
         private void Awake()
         {
@@ -18,6 +20,7 @@ namespace Project.Source
         }
 
         public void AddPoints() => _points.Value += RewardPerEnemy;
+        public void ResetPoints() => _points.Value = 0;
 
         private class Points
         {
