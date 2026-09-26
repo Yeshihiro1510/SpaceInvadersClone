@@ -1,4 +1,5 @@
 using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -8,37 +9,51 @@ namespace Project.Source
     {
         [field: SerializeField, Min(0)] public float Speed { get; private set; }
         [field: SerializeField, Min(0)] public float AttackRate { get; private set; }
-        [field: SerializeField, Min(1)] public float PlayerStarterHealth { get; private set; }
-        
-        [SerializeField] private BulletController _bulletPrefab;
+        [field: SerializeField, Min(1)] public float StarterHealth { get; private set; }
 
-        private BulletLifetimeController _bulletLifetime;
+        [SerializeField] private BulletController _bulletPrefab;
+        [SerializeField] private TMP_Text _healthText;
 
         private float _xInput;
         private bool _isAttacking;
         private float _attackingTimer;
-        private float _playerHealth;
+        private float _health;
+
+        public float Health
+        {
+            get => _health;
+            set
+            {
+                if (value <= 0)
+                {
+                    _health = 0;
+                    onDeath?.Invoke();
+                }
+                else _health = value;
+                
+                _healthText.text = $"Health: {_health}";
+            }
+        }
 
         public event Action onDeath;
 
         private void Awake()
         {
-            GlobalInputSystem.InputSystem.Player.Move.performed += OnMove;
-            GlobalInputSystem.InputSystem.Player.Move.canceled += OnStop;
-            GlobalInputSystem.InputSystem.Player.Attack.performed += OnAttack;
-            GlobalInputSystem.InputSystem.Player.Attack.canceled += OnStopAttacking;
-
-            _bulletLifetime = FindAnyObjectByType<BulletLifetimeController>();
+            GlobalServices.InputSystem.Player.Move.performed += OnMove;
+            GlobalServices.InputSystem.Player.Move.canceled += OnStop;
+            GlobalServices.InputSystem.Player.Attack.performed += OnAttack;
+            GlobalServices.InputSystem.Player.Attack.canceled += OnStopAttacking;
+            Respawn();
         }
 
         private void OnEnable()
         {
-            GlobalInputSystem.InputSystem.Player.Enable();
+            GlobalServices.InputSystem.Player.Enable();
         }
 
         private void OnDisable()
         {
-            GlobalInputSystem.InputSystem.Player.Disable();
+            GlobalServices.InputSystem.Player.Disable();
         }
 
         private void Update()
@@ -50,8 +65,8 @@ namespace Project.Source
             if (CheckBounds(delta)) transform.Translate(new Vector2(delta, 0));
             if (_isAttacking && _attackingTimer >= AttackRate)
             {
-                var bullet1 = _bulletLifetime.Spawn(_bulletPrefab, Vector2.up);
-                var bullet2 = _bulletLifetime.Spawn(_bulletPrefab, Vector2.up);
+                var bullet1 = BulletFactory.Spawn(_bulletPrefab, Vector2.up);
+                var bullet2 = BulletFactory.Spawn(_bulletPrefab, Vector2.up);
                 bullet1.transform.position = transform.position + new Vector3(0.2f, 1f, 0);
                 bullet2.transform.position = transform.position + new Vector3(-0.2f, 1f, 0);
                 _attackingTimer = 0;
@@ -60,10 +75,10 @@ namespace Project.Source
 
         private void OnDestroy()
         {
-            GlobalInputSystem.InputSystem.Player.Move.performed -= OnMove;
-            GlobalInputSystem.InputSystem.Player.Move.canceled -= OnStop;
-            GlobalInputSystem.InputSystem.Player.Attack.performed -= OnAttack;
-            GlobalInputSystem.InputSystem.Player.Attack.canceled -= OnStopAttacking;
+            GlobalServices.InputSystem.Player.Move.performed -= OnMove;
+            GlobalServices.InputSystem.Player.Move.canceled -= OnStop;
+            GlobalServices.InputSystem.Player.Attack.performed -= OnAttack;
+            GlobalServices.InputSystem.Player.Attack.canceled -= OnStopAttacking;
         }
 
         private void OnMove(InputAction.CallbackContext context) => _xInput = context.ReadValue<Vector2>().x;
@@ -79,16 +94,12 @@ namespace Project.Source
 
         public void TakeDamage(float damage)
         {
-            _playerHealth--;
-            if (_playerHealth <= 0)
-            {
-                onDeath?.Invoke();
-            }
+            Health -= damage;
         }
 
         public void Respawn()
         {
-            _playerHealth = PlayerStarterHealth;
+            Health = StarterHealth;
         }
     }
 }

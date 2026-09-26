@@ -47,8 +47,8 @@ Material:
     m_Floats:
     - _AlphaClip: 0.5
     - _ColorMask: 15
-    - _Progress: 0.022631371
-    - _ProgressY: -0.9386587
+    - _Progress: 0
+    - _ProgressY: 0
     - _Stencil: 0
     - _StencilComp: 8
     - _StencilOp: 0

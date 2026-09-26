@@ -4,24 +4,13 @@ namespace Project.Source
 {
     public class GameFieldInfo : MonoBehaviour
     {
-        public static float LeftBound { get; private set; }
-        public static float RightBound { get; private set; }
-        public static float TopBound { get; private set; }
-        public static float BottomBound { get; private set; }
-        public static float Top2BottomDistance { get; private set; }
-        public static float HalfWidth { get; private set; }
-
-        private void OnValidate()
-        {
-            var xHalfSize = transform.localScale.x / 2f;
-            var yHalfSize = transform.localScale.y / 2f;
-            
-            RightBound = transform.position.x + xHalfSize;
-            LeftBound = transform.position.x - xHalfSize;
-            TopBound = transform.position.y + yHalfSize;
-            BottomBound = transform.position.y - yHalfSize;
-            Top2BottomDistance = TopBound - BottomBound;
-            HalfWidth = transform.localScale.x / 2f;
-        }
+        public static float RightBound => Center.x + HalfWidth;
+        public static float LeftBound => Center.x - HalfWidth;
+        public static float TopBound => Center.y + HalfHeight;
+        public static float BottomBound => Center.y - HalfHeight;
+        public static float Top2BottomDistance => Camera.main.orthographicSize * 2;
+        public static float HalfWidth => Camera.main.orthographicSize * Camera.main.aspect;
+        public static float HalfHeight => Camera.main.orthographicSize;
+        public static Vector2 Center => Camera.main.transform.position;
     }
 }

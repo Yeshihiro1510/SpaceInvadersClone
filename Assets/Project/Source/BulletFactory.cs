@@ -3,17 +3,17 @@ using UnityEngine.Pool;
 
 namespace Project.Source
 {
-    public class BulletLifetimeController : MonoBehaviour
+    public static class BulletFactory
     {
-        private ObjectPool<BulletController> _pool;
+        private static readonly ObjectPool<BulletController> _pool;
         
-        private BulletController _prefab;
+        private static BulletController _prefab;
 
-        private void Awake()
+        static BulletFactory()
         {
             _pool = new ObjectPool<BulletController>(() =>
                 {
-                    var bullet = Instantiate(_prefab);
+                    var bullet = Object.Instantiate(_prefab);
                     bullet.onDespawn += OnBulletDespawn;
                     bullet.onDeath += OnBulletDeath;
                     return bullet;
@@ -27,11 +27,10 @@ namespace Project.Source
                 });
         }
 
+        private static void OnBulletDespawn(BulletController bullet) => _pool.Release(bullet);
+        private static void OnBulletDeath(BulletController bullet) => _pool.Release(bullet);
 
-        private void OnBulletDespawn(BulletController bullet) => _pool.Release(bullet);
-        private void OnBulletDeath(BulletController bullet) => _pool.Release(bullet);
-
-        public BulletController Spawn(BulletController prefab, Vector2 direction)
+        public static BulletController Spawn(BulletController prefab, Vector2 direction)
         {
             _prefab = prefab;
             var bullet = _pool.Get();

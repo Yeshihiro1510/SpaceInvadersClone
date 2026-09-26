@@ -106,7 +106,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 116fe7d16918436eb30daa6308223719, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Project.Source.MobController
-  <StartHealth>k__BackingField: 5
+  <StartHealth>k__BackingField: 7
   <FallSpeed>k__BackingField: 4
 --- !u!58 &5296655394782481192
 CircleCollider2D:
