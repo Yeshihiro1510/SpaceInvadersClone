@@ -20,7 +20,7 @@ namespace Project.Source
             {
                 if (value < 0) value = 0;
                 _value = value;
-                _text.text = $"Points: {_value}";
+                _text.text = value.ToString();
             }
         }
     }

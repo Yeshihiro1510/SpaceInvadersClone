@@ -5,11 +5,11 @@ namespace Project.Source
 {
     public class MobController : MonoBehaviour, IDamageable
     {
-        [field: SerializeField, Min(0)] public float StartHealth { get; private set; }
+        [field: SerializeField, Min(0)] public int StartHealth { get; private set; }
         [field: SerializeField, Min(0)] public float FallSpeed { get; private set; }
 
         private float _timer;
-        private float _health;
+        private int _health;
         private bool _isDead;
 
         public event Action<MobController> onDeath;
@@ -31,7 +31,7 @@ namespace Project.Source
             else _timer -= Time.deltaTime;
         }
 
-        public void TakeDamage(float damage)
+        public void TakeDamage(int damage)
         {
             if (_isDead) return;
             _health -= damage;

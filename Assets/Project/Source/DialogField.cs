@@ -23,14 +23,18 @@ namespace Project.Source
         {
             if (string.IsNullOrEmpty(text))
             {
-                _text.text = string.Empty;
-                DOVirtual.Int(0, _text.text.Length, TextDuration, v => _text.maxVisibleCharacters = v)
+                DOVirtual.Int(_text.text.Length, 0, TextDuration, v => _text.maxVisibleCharacters = v)
                     .SetEase(TextEase)
-                    .OnComplete(() => { transform.DOScaleY(0, FieldDuration).SetEase(FieldEase); });
+                    .OnComplete(() =>
+                    {
+                        _text.text = string.Empty;
+                        transform.DOScaleY(0, FieldDuration).SetEase(FieldEase);
+                    });
             }
             else
             {
                 _text.text = text;
+                _text.maxVisibleCharacters = 0;
                 transform.DOScaleY(1, FieldDuration).SetEase(FieldEase)
                     .OnComplete(() =>
                         DOVirtual.Int(0, _text.text.Length, TextDuration, v => _text.maxVisibleCharacters = v)

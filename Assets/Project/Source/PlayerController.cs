@@ -1,5 +1,4 @@
 using System;
-using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -9,17 +8,14 @@ namespace Project.Source
     {
         [field: SerializeField, Min(0)] public float Speed { get; private set; }
         [field: SerializeField, Min(0)] public float AttackRate { get; private set; }
-        [field: SerializeField, Min(1)] public float StarterHealth { get; private set; }
-
-        [SerializeField] private BulletController _bulletPrefab;
-        [SerializeField] private TMP_Text _healthText;
-
+        [field: SerializeField, Min(1)] public int StarterHealth { get; private set; }
+        
         private float _xInput;
         private bool _isAttacking;
         private float _attackingTimer;
-        private float _health;
+        private int _health;
 
-        public float Health
+        public int Health
         {
             get => _health;
             set
@@ -31,7 +27,7 @@ namespace Project.Source
                 }
                 else _health = value;
                 
-                _healthText.text = $"Health: {_health}";
+                UI.HealthField.SetHealth(value);
             }
         }
 
@@ -46,15 +42,8 @@ namespace Project.Source
             Respawn();
         }
 
-        private void OnEnable()
-        {
-            GlobalServices.InputSystem.Player.Enable();
-        }
-
-        private void OnDisable()
-        {
-            GlobalServices.InputSystem.Player.Disable();
-        }
+        private void OnEnable() => GlobalServices.InputSystem.Player.Enable();
+        private void OnDisable() => GlobalServices.InputSystem.Player.Disable();
 
         private void Update()
         {
@@ -65,8 +54,8 @@ namespace Project.Source
             if (CheckBounds(delta)) transform.Translate(new Vector2(delta, 0));
             if (_isAttacking && _attackingTimer >= AttackRate)
             {
-                var bullet1 = BulletFactory.Spawn(_bulletPrefab, Vector2.up);
-                var bullet2 = BulletFactory.Spawn(_bulletPrefab, Vector2.up);
+                var bullet1 = G.BulletFactory.CreatePlayerBullet(Vector2.up);
+                var bullet2 = G.BulletFactory.CreatePlayerBullet(Vector2.up);
                 bullet1.transform.position = transform.position + new Vector3(0.2f, 1f, 0);
                 bullet2.transform.position = transform.position + new Vector3(-0.2f, 1f, 0);
                 _attackingTimer = 0;
@@ -92,14 +81,7 @@ namespace Project.Source
             return deltaPosition >= GameFieldInfo.LeftBound && deltaPosition <= GameFieldInfo.RightBound;
         }
 
-        public void TakeDamage(float damage)
-        {
-            Health -= damage;
-        }
-
-        public void Respawn()
-        {
-            Health = StarterHealth;
-        }
+        public void TakeDamage(int damage) => Health -= damage;
+        public void Respawn() => Health = StarterHealth;
     }
 }

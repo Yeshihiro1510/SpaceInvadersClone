@@ -5,7 +5,7 @@ namespace Project.Source
 {
     public class BulletController : MonoBehaviour
     {
-        [field: SerializeField] public float Damage { get; private set; }
+        [field: SerializeField] public int Damage { get; private set; }
         [field: SerializeField] public float Speed { get; private set; }
 
         private float _timer;

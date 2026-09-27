@@ -3,39 +3,66 @@ using UnityEngine.Pool;
 
 namespace Project.Source
 {
-    public static class BulletFactory
+    public class BulletFactory
     {
-        private static readonly ObjectPool<BulletController> _pool;
+        private readonly BulletController _playerBulletPrefab = Resources.Load<BulletController>("PlayerBullet");
+        private readonly BulletController _mobBulletPrefab = Resources.Load<BulletController>("MobBullet");
         
-        private static BulletController _prefab;
-
-        static BulletFactory()
+        private readonly ObjectPool<BulletController> _playerBulletsPool;
+        private readonly ObjectPool<BulletController> _mobBulletsPool;
+        
+        public BulletFactory()
         {
-            _pool = new ObjectPool<BulletController>(() =>
+            _playerBulletsPool = new ObjectPool<BulletController>(() =>
                 {
-                    var bullet = Object.Instantiate(_prefab);
-                    bullet.onDespawn += OnBulletDespawn;
-                    bullet.onDeath += OnBulletDeath;
+                    var bullet = Object.Instantiate(_playerBulletPrefab);
+                    bullet.onDespawn += OnPlayerBulletDespawn;
+                    bullet.onDeath += OnPlayerBulletDeath;
                     return bullet;
                 },
-                o => o.gameObject.SetActive(true), 
+                o => o.gameObject.SetActive(true),
                 o => o.gameObject.SetActive(false),
                 o =>
                 {
-                    o.onDespawn -= OnBulletDespawn;
-                    o.onDeath += OnBulletDeath;
-                });
+                    o.onDespawn -= OnPlayerBulletDespawn;
+                    o.onDeath -= OnPlayerBulletDeath;
+                }
+            );
+
+            _mobBulletsPool = new ObjectPool<BulletController>(() =>
+                {
+                    var bullet = Object.Instantiate(_mobBulletPrefab);
+                    bullet.onDespawn += OnMobBulletDespawn;
+                    bullet.onDeath += OnMobBulletDeath;
+                    return bullet;
+                },
+                o => o.gameObject.SetActive(true),
+                o => o.gameObject.SetActive(false),
+                o =>
+                {
+                    o.onDespawn -= OnMobBulletDespawn;
+                    o.onDeath -= OnMobBulletDeath;
+                }
+            );
         }
 
-        private static void OnBulletDespawn(BulletController bullet) => _pool.Release(bullet);
-        private static void OnBulletDeath(BulletController bullet) => _pool.Release(bullet);
+        private void OnPlayerBulletDespawn(BulletController bullet) => _playerBulletsPool.Release(bullet);
+        private void OnPlayerBulletDeath(BulletController bullet) => _playerBulletsPool.Release(bullet);
+        private void OnMobBulletDespawn(BulletController bullet) => _mobBulletsPool.Release(bullet);
+        private void OnMobBulletDeath(BulletController bullet) => _mobBulletsPool.Release(bullet);
 
-        public static BulletController Spawn(BulletController prefab, Vector2 direction)
+        public BulletController CreatePlayerBullet(Vector2 direction)
         {
-            _prefab = prefab;
-            var bullet = _pool.Get();
-            bullet.Launch(GameFieldInfo.Top2BottomDistance / (direction * bullet.Speed).magnitude, direction);
+            var bullet = _playerBulletsPool.Get();
+            bullet.Launch(GameFieldInfo.Top2BottomDistance / bullet.Speed, direction);
             return bullet;
+        }
+
+        public BulletController CreateMobBullet(Vector2 direction)
+        {
+            var bullet = _mobBulletsPool.Get();
+            bullet.Launch(GameFieldInfo.Top2BottomDistance / bullet.Speed, direction);
+            return bullet;            
         }
     }
 }

@@ -2,31 +2,30 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Pool;
+using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
 
 namespace Project.Source
 {
-    public class MobLifetimeController : MonoBehaviour
+    public class MobFactory
     {
-        [field: SerializeField] public float YTopOffset { get; private set; }
-        [field: SerializeField] public float YBottomOffset { get; private set; }
-
-        [SerializeField] private MobController _prefab;
-        [SerializeField] private Grid _grid;
-
-        private ObjectPool<MobController> _pool;
+        private readonly MobController _prefab = Resources.Load<MobController>("Mob");
+        
+        private readonly ObjectPool<MobController> _pool;
         private readonly List<MobController> _activeMobs = new();
+        private readonly Grid _grid;
         
         public int ActiveMobCount => _activeMobs.Count;
+        public MobController[] ActiveMobs => _activeMobs.ToArray();
 
         public event Action onMobDeath;
         public event Action onMobDespawn;
 
-        private void Awake()
+        public MobFactory()
         {
             _pool = new ObjectPool<MobController>(() =>
                 {
-                    var mob = Instantiate(_prefab);
+                    var mob = Object.Instantiate(_prefab);
                     mob.onDespawn += OnMobDespawn;
                     mob.onDeath += OnMobDeath;
                     return mob;
@@ -46,6 +45,8 @@ namespace Project.Source
                     o.onDespawn -= OnMobDespawn;
                     o.onDeath -= OnMobDeath;
                 });
+            
+            _grid = Object.FindAnyObjectByType<Grid>();
         }
 
         private void OnMobDespawn(MobController mob)
@@ -60,12 +61,11 @@ namespace Project.Source
             onMobDeath?.Invoke();
         }
 
-        public void Spawn()
+        public void Create()
         {
             var mob = _pool.Get();
-            var lifetime = (GameFieldInfo.Top2BottomDistance + YTopOffset - YBottomOffset) / mob.FallSpeed;
-            var randomWorldPos = new Vector3(Random.Range(GameFieldInfo.LeftBound, GameFieldInfo.RightBound),
-                GameFieldInfo.TopBound + YTopOffset, 0);
+            var lifetime = (GameFieldInfo.Top2BottomDistance + 2) / mob.FallSpeed;
+            var randomWorldPos = new Vector3(Random.Range(GameFieldInfo.LeftBound, GameFieldInfo.RightBound), GameFieldInfo.TopBound + 1, 0);
             var cellPosition = _grid.WorldToCell(randomWorldPos);
             mob.transform.position = _grid.GetCellCenterWorld(cellPosition);
             mob.Launch(lifetime);

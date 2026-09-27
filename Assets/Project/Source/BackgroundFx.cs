@@ -21,9 +21,8 @@ namespace Project.Source
         private float _runtimeScrollingSpeed;
         private float _time;
 
-        private void Update()
+        public void Tick(float playerPosX)
         {
-            var posX = _player.transform.position.x;
             _time += Time.deltaTime * _runtimeScrollingSpeed;
             var cycledTime = Mathf.Repeat(_time, 1) * 2 - 1;
             // var absPosX = Mathf.Abs(posX);
@@ -31,7 +30,7 @@ namespace Project.Source
             // var poweredTime = Mathf.Sqrt(time);
             // _firstLayerMaterial.SetFloat("_Progress", float.IsNaN(poweredTime) ? time : poweredTime * (posX / absPosX) * _firstLayerMultiplier);
             // _secondLayerMaterial.SetFloat("_Progress", float.IsNaN(poweredTime) ? time : poweredTime * (posX / absPosX) * _secondLayerMultiplier);
-            var progress = posX / GameFieldInfo.HalfWidth;
+            var progress = playerPosX / GameFieldInfo.HalfWidth;
             _firstLayerMaterial.SetFloat(ProgressX, progress * FirstLayerMultiplier);
             _secondLayerMaterial.SetFloat(ProgressX, progress * SecondLayerMultiplier);
             _firstLayerMaterial.SetFloat(ProgressY, cycledTime);
