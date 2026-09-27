@@ -162,7 +162,7 @@ GameObject:
   - component: {fileID: 136336073}
   - component: {fileID: 136336074}
   m_Layer: 0
-  m_Name: 3
+  m_Name: Layer1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -194,7 +194,7 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 136336069}
-  m_CullTransparentMesh: 0
+  m_CullTransparentMesh: 1
 --- !u!114 &136336074
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -207,7 +207,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
-  m_Material: {fileID: 2100000, guid: 0a4c91b254b647d4db2749bd5c918d2f, type: 2}
+  m_Material: {fileID: 2100000, guid: 61005eb26c6768d408f4b3657da210a0, type: 2}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
@@ -215,7 +215,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: ed8580d290c0760428cea493dd4c277f, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -489,7 +489,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.081706405, g: 0.047109812, b: 0.16078432, a: 0}
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -514,7 +514,7 @@ Camera:
   far clip plane: 1000
   field of view: 34
   orthographic: 1
-  orthographic size: 5.625
+  orthographic size: 6
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -649,7 +649,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 72
+  m_fontSize: 48
   m_fontSizeBase: 72
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -936,7 +936,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 51
+  m_fontSize: 18
   m_fontSizeBase: 55
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -1043,7 +1043,7 @@ MonoBehaviour:
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
+  m_MatchWidthOrHeight: 1
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -1108,9 +1108,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38bfd77482764c1fa8db01e9b33d39eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Project.Source.UI
-  _pointsText: {fileID: 975370402}
-  _healthField: {fileID: 1829763318}
-  _dialogField: {fileID: 734010285}
+  <PointsText>k__BackingField: {fileID: 975370402}
+  <HealthField>k__BackingField: {fileID: 1829763318}
+  <DialogField>k__BackingField: {fileID: 734010285}
 --- !u!1 &1151794319
 GameObject:
   m_ObjectHideFlags: 0
@@ -1123,7 +1123,7 @@ GameObject:
   - component: {fileID: 1151794323}
   - component: {fileID: 1151794322}
   m_Layer: 0
-  m_Name: 1
+  m_Name: Main
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1231,7 +1231,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Project.Source.Game
   <MobsSpawnRate>k__BackingField: 1
-  <MobsCount>k__BackingField: 28
+  <MobsCount>k__BackingField: 200
   <RewardPerMob>k__BackingField: 5
   <MobsShootingRate>k__BackingField: 1.2
   _backgroundFx: {fileID: 1531407060}
@@ -1247,7 +1247,7 @@ GameObject:
   - component: {fileID: 1429068514}
   - component: {fileID: 1429068513}
   m_Layer: 0
-  m_Name: 2
+  m_Name: Layer2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1284,7 +1284,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
-  m_Material: {fileID: 2100000, guid: d14930afc0e754e489ea623dc9363f74, type: 2}
+  m_Material: {fileID: 2100000, guid: 4e85aa790ddaf3f48820ccd7572f881f, type: 2}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
@@ -1292,7 +1292,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 19ab2b1347e97274284b5c5d9b4a0149, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1309,7 +1309,7 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1429068510}
-  m_CullTransparentMesh: 0
+  m_CullTransparentMesh: 1
 --- !u!1 &1531407057
 GameObject:
   m_ObjectHideFlags: 0
@@ -1378,12 +1378,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Project.Source.BackgroundFx
   <FirstLayerMultiplier>k__BackingField: 0.3
   <SecondLayerMultiplier>k__BackingField: 0.2
-  <ScrollingSpeed>k__BackingField: 0.4
+  <StarterScrollingSpeed>k__BackingField: 0
   <ScrollingStartAndStopDuration>k__BackingField: 2
   <ScrollingStartAndStopEase>k__BackingField: 5
-  _player: {fileID: 0}
-  _firstLayerMaterial: {fileID: 2100000, guid: 0a4c91b254b647d4db2749bd5c918d2f, type: 2}
-  _secondLayerMaterial: {fileID: 2100000, guid: d14930afc0e754e489ea623dc9363f74, type: 2}
+  _firstLayerMaterial: {fileID: 2100000, guid: 61005eb26c6768d408f4b3657da210a0, type: 2}
+  _secondLayerMaterial: {fileID: 2100000, guid: 4e85aa790ddaf3f48820ccd7572f881f, type: 2}
 --- !u!1 &1733163887
 GameObject:
   m_ObjectHideFlags: 0
@@ -1541,7 +1540,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 50, y: 0}
-  m_SizeDelta: {x: 81, y: 0}
+  m_SizeDelta: {x: 39, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1923213487
 MonoBehaviour:

@@ -24,7 +24,7 @@ namespace Project.Source
             G.BulletFactory = new BulletFactory();
             G.MobFactory = new MobFactory();
             
-            _points = new Points(UI.PointsText);
+            _points = new Points(UI.Instance.PointsText);
             _player = Instantiate(Resources.Load<PlayerController>("Player"));
             _player.transform.position = GameFieldInfo.Center + new Vector2(0, GameFieldInfo.BottomBound) * 0.7f;
 
@@ -71,7 +71,7 @@ namespace Project.Source
             {
                 _isGameOver = true;
                 _backgroundFx.StopScrolling();
-                UI.DialogField.DOText($"Congratulations! You've completed prototype with {_points.Value} points!\nPress [R] to restart the game . . .");
+                UI.Instance.DialogField.DOText($"Congratulations! You've completed prototype with {_points.Value} points!\nPress [R] to restart the game . . .");
             }
         }
 
@@ -93,7 +93,7 @@ namespace Project.Source
             _isGameOver = true;
             G.MobFactory.Clear();
             _backgroundFx.StopScrolling();
-            UI.DialogField.DOText($"Its total fail! You ended up with {_points.Value} points.\nPress [R] to restart the game . . .");
+            UI.Instance.DialogField.DOText($"Its total fail! You ended up with {_points.Value} points.\nPress [R] to restart the game . . .");
         }
 
         private void Reload()
@@ -105,7 +105,7 @@ namespace Project.Source
             _mobsLeft = MobsCount;
 
             if (_isGameOver) _backgroundFx.StartScrolling();
-            UI.DialogField.DOText("");
+            UI.Instance.DialogField.DOText("");
             _player.Respawn();
 
             _isGameOver = false;

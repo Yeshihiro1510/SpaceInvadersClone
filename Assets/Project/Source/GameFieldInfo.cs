@@ -13,7 +13,7 @@ namespace Project.Source
         public static float BottomBound { get; private set; }
         public static float Top2BottomDistance { get; private set; }
 
-        private void OnValidate()
+        private void Awake()
         {
             if (!TryGetComponent(out Camera camera)) return;
             

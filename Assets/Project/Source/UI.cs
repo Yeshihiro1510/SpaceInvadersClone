@@ -5,19 +5,19 @@ namespace Project.Source
 {
     public class UI : MonoBehaviour
     {
-        [SerializeField] private TMP_Text _pointsText;
-        [SerializeField] private HealthField _healthField;
-        [SerializeField] private DialogField _dialogField;
-        
-        public static TMP_Text PointsText { get; private set; }
-        public static HealthField HealthField { get; private set; }
-        public static DialogField DialogField { get; private set; }
-        
-        private void OnValidate()
+        [field: SerializeField] public TMP_Text PointsText { get; private set; }
+        [field: SerializeField] public HealthField HealthField { get; private set; }
+        [field: SerializeField] public DialogField DialogField { get; private set; }
+
+        private static UI _instance;
+
+        public static UI Instance
         {
-            PointsText = _pointsText;
-            HealthField = _healthField;
-            DialogField = _dialogField;
+            get
+            {
+                if (_instance == null) _instance = FindAnyObjectByType<UI>();
+                return _instance;
+            }
         }
     }
 }

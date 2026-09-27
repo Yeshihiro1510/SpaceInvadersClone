@@ -27,7 +27,7 @@ namespace Project.Source
                 }
                 else _health = value;
                 
-                UI.HealthField.SetHealth(value);
+                UI.Instance.HealthField.SetHealth(value);
             }
         }
 
